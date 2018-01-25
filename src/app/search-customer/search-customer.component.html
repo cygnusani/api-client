@@ -1,0 +1,20 @@
+<div class="container" id="search-component">
+  <div class="input-group">
+    <input #searchBox id="search-box" class="form-control" (keyup)="search(searchBox.value)" placeholder="Search..."/>
+    <i id="search-box-icon" class="fa fa-search"></i>
+  </div>
+  <ul id="search-results" class="search-result">
+    <!-- The $ in "heroes$" is a convention that indicates heroes$ is an Observable, not an array
+    The *ngFor can't do anything with an Observable. But there's also a pipe character (|) followed by async,
+    which identifies Angular's AsyncPipe.
+    The AsyncPipe subscribes to an Observable automatically so you won't have to do so in the component class -->
+    <li id="search-result" *ngFor="let customer of customers$ | async" >
+      <a routerLink="/edit/{{customer.id}}">
+        <tr class="row">
+          <td>{{customer.firstName}}</td>
+          <td>{{customer.lastName}}</td>
+        </tr>
+      </a>
+    </li>
+  </ul>
+</div>

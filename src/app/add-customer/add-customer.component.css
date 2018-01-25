@@ -1,0 +1,19 @@
+#customer-form {
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+#add-phone-btn {
+  position: relative;
+  left: 20px;
+}
+
+#add-phone-text {
+  position: relative;
+  top: 7px;
+  left: 30px;
+}
+
+#customer-form-btns {
+  margin-top: 30px;
+}

@@ -1,0 +1,35 @@
+<!-- Button trigger modal -->
+<div id="messages_btn" class="row">
+  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Messages <span class="badge badge-light" *ngIf="messageService.messages.length">{{messageService.messages.length}}</span>
+  </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Messages</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor='let message of messageService.messages'>
+            <tr>
+              <td>{{message}}</td>
+              <td>
+                <button id="delete-message-btn" type="button" class="btn btn-outline-secondary" (click)="messageService.remove(message)"><i class="fa fa-remove"></i></button>
+              </td>
+            </tr>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <!-- clear messages -->
+        <button type="button" class="btn btn-outline-primary" (click)="messageService.clear()" data-dismiss="modal">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>

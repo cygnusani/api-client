@@ -1,0 +1,29 @@
+#customer-id {
+  font-weight: bold;
+}
+
+#customers-table {
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+#info-btn {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 50px;
+}
+
+#info-phones-label {
+  position: relative;
+  left: 10px;
+}
+
+#edit-btn {
+  width: 50px;
+}
+
+#delete-btn {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 50px;
+}

@@ -1,0 +1,12 @@
+#messages_btn {
+  position: fixed;
+  bottom: 10px;
+  left: 25px;
+}
+
+#delete-message-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 5px;
+}

@@ -1,0 +1,31 @@
+#search-component {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#search-box {
+  border-radius: 20px;
+  padding-left: 20px;
+}
+
+#search-box-icon {
+  position: relative;
+  right: 30px;
+  top: 9px;
+  z-index: 3;
+  color: lightgray;
+}
+
+#search-results {
+  position: absolute;
+  z-index: 3;
+  background: lightgray;
+}
+
+#search-result {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  list-style: none;
+  height: 20px;
+}

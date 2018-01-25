@@ -1,0 +1,95 @@
+<app-search-customer></app-search-customer>
+<div id="customers-table" class="container">
+  <table class="table">
+    <thead class="thead-light">
+    <tr class="row">
+      <th class="col-sm-1">ID</th>
+      <th class="col-sm-3">First Name</th>
+      <th class="col-sm-3">Last Name</th>
+      <th class="col-sm-2">Code</th>
+      <th class="col-sm-3">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="row" *ngFor="let customer of customers">
+      <td id="customer-id" class="col-sm-1">{{customer.id}}</td>
+      <td class="col-sm-3">{{customer.firstName}}</td>
+      <td class="col-sm-3">{{customer.lastName}}</td>
+      <td class="col-sm-2">{{customer.code}}</td>
+      <td class="col-sm-3">
+        <div class="btn-group">
+          <button id="info-btn" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#moreInfoModal" (click)="getMoreInfo(customer)"><i class="fa fa-info-circle"></i></button>
+          <button id="edit-btn" type="button" class="btn btn-outline-primary" routerLink="/edit/{{customer.id}}"><i class="fa fa-edit"></i></button>
+          <button id="delete-btn" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="selectCustomerToDeletion(customer)"><i class="fa fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!-- info -->
+<div class="modal fade" id="moreInfoModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">More info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="customer != null">
+        <div class="container">
+          <table class="table">
+            <thead class="thead-light">
+            <tr class="row">
+              <th class="col">Customer Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="row">
+              <td class="col">{{customer.type.split('.')[1]}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="container">
+          <h5 id="info-phones-label">Phones</h5>
+          <table class="table">
+            <thead class="thead-light">
+            <tr class="row">
+              <th class="col">Value</th>
+              <th class="col">Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="row" *ngFor="let phone of phones">
+              <td class="col">{{phone.value}}</td>
+              <td class="col">{{phone.type.split('.')[1]}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delete confirmation -->
+<div id="deleteConfirmationModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Delete selected customer?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="delete()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
