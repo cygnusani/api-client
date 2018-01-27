@@ -1,49 +1,86 @@
-<div id="customer-form" class="container">
-  <div class="row">
-    <h4>Customer form</h4>
-  </div>
-   <div class="form-group">
-     <label for="firstName"><h6>First Name</h6></label>
-     <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="customer.firstName">
-   </div>
-  <div class="form-group">
-    <label for="lastName"><h6>Last Name</h6></label>
-    <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="customer.lastName">
-  </div>
-  <div class="form-group">
-    <label for="code"><h6>Code</h6></label>
-    <input type="text" class="form-control" id="code" name="code" [(ngModel)]="customer.code">
-  </div>
-  <div class="form-group">
-    <label for="type"><h6>Type</h6></label>
-    <select class="form-control" id="type" [(ngModel)]="customer.type">
-      <option *ngFor="let customerType of customerTypes" [value]="customerType">{{customerType.split('.')[1]}}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="phones"><h6>Phones</h6></label>
-    <div class="row"> <!-- *ngIf="customer.phones.length == 0" -->
-      <button id="add-phone-btn" type="button" class="btn btn-outline-success" (click)="addPhone()"><i class="fa fa-plus"></i></button>
-      <h6 id="add-phone-text">Add new phone</h6>
+<!-- brackets for a reactive form -->
+<div id="customer-form" class="container" *ngIf="customer!=null">
+  <form #customerForm="ngForm">
+
+    <div class="row">
+      <h4 *ngIf="customer.id==null">New customer</h4>
+      <h4 *ngIf="customer.id!=null">Edit customer</h4>
     </div>
-    <table class="table" id="phones">
-      <tr *ngFor="let phone of customer.phones">
-        <div>
-          <label for="phone">Number</label>
-          <input type="text" id="phone" [(ngModel)]="phone.value">
-          <label for="phoneType">Type</label>
-          <select id="phoneType" [(ngModel)]="phone.type">
-            <option *ngFor="let phoneType of phoneTypes" [value]="phoneType">{{phoneType.split('.')[1]}}</option>
-          </select>
-          <button id="remove-phone-btn" type="button" class="btn btn-outline-danger" (click)="deletePhone(phone)"><i class="fa fa-remove"></i></button>
-        </div>
-      </tr>
-    </table>
-  </div>
-  <div id="customer-form-btns" class="form-group">
-    <div class="button-row">
-      <button type="button" class="btn btn-outline-success" (click)="save()">Add</button>
-      <button type="button" class="btn btn-outline-danger" (click)="clear()">Clear</button>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="customer.firstName"
+             required
+             minlength="2"
+             maxlength="15"
+             pattern="[a-zA-Z ]*"
+             #firstName="ngModel">
     </div>
-  </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" name="last" [(ngModel)]="customer.lastName"
+             required
+             minlength="2"
+             maxlength="15"
+             pattern="[a-zA-Z ]*">
+    </div>
+    <div class="form-group">
+      <label for="code">Code</label>
+      <input type="text" class="form-control" id="code" name="code" [(ngModel)]="customer.code"
+             required
+             pattern="[0-9a-zA-Z ]*">
+    </div>
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" id="type" name="type" [(ngModel)]="customer.type"
+              required>
+        <option *ngFor="let customerType of customerTypes" [value]="customerType">{{customerType.split('.')[1]}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="phones">Phones</label>
+      <div class="row">
+        <button id="add-phone-btn" type="button" class="btn btn-outline-success" (click)="addPhone()"><i
+          class="fa fa-plus"></i></button>
+        <h6 id="add-phone-text">Add new phone</h6>
+      </div>
+      <table class="table" id="phones">
+        <tr *ngFor="let phone of customer.phones">
+          <div id="phone-row-div" class="form-row">
+
+            <div class="col-md-4">
+              <label for="phone">Number</label>
+              <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="phone.value"
+                     required
+                     pattern="\+?\d+">
+            </div>
+
+            <div class="col-md-4">
+              <label for="phoneType">Type</label>
+              <select class="form-control" id="phoneType" name="phoneType" [(ngModel)]="phone.type"
+                      required>
+                <option *ngFor="let phoneType of phoneTypes" [value]="phoneType">{{phoneType.split('.')[1]}}</option>
+              </select>
+            </div>
+
+            <div id="remove-phone-btn-row" class="col-md-4">
+              <button id="remove-phone-btn" type="button" class="btn btn-outline-danger" (click)="deletePhone(phone)"><i
+                class="fa fa-remove"></i></button>
+            </div>
+
+          </div>
+        </tr>
+      </table>
+    </div>
+    <div id="customer-form-btns" class="form-group">
+      <div class="button-row">
+        <button type="submit" class="btn btn-outline-success" [disabled]="!customerForm.form.valid" (click)="save()">
+          Save
+        </button>
+        <button type="button" class="btn btn-outline-danger" (click)="clear()">Clear</button>
+      </div>
+    </div>
+
+  </form>
+
 </div>

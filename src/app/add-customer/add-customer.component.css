@@ -17,3 +17,25 @@
 #customer-form-btns {
   margin-top: 30px;
 }
+
+#phone-row-div {
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+#remove-phone-btn-row {
+  height: 70px;
+}
+
+#remove-phone-btn {
+  position: absolute;
+  bottom: 0;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}

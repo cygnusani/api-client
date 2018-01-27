@@ -18,6 +18,7 @@ export class AddCustomerComponent implements OnInit {
   customerTypes: string[];
   phoneTypes: string[];
 
+
   constructor(
     private route: ActivatedRoute,
     private classifiersService: ClassifiersService,
