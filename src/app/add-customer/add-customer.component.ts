@@ -18,13 +18,11 @@ export class AddCustomerComponent implements OnInit {
   customerTypes: string[];
   phoneTypes: string[];
 
-
-  constructor(
-    private route: ActivatedRoute,
-    private classifiersService: ClassifiersService,
-    private customerService: CustomerService,
-    private location: Location
-  ) { }
+  constructor(private route: ActivatedRoute,
+              private classifiersService: ClassifiersService,
+              private customerService: CustomerService,
+              private location: Location) {
+  }
 
   ngOnInit() {
     this.getCustomerTypes();
@@ -38,7 +36,7 @@ export class AddCustomerComponent implements OnInit {
       this.customerService.getCustomerById(id)
         .subscribe(customer => this.customer = customer);
     } else {
-      this.customer = new Customer(null,'','','','', []);
+      this.customer = new Customer(null, '', '', '', '', []);
     }
   }
 
@@ -68,21 +66,21 @@ export class AddCustomerComponent implements OnInit {
   }
 
   clear(): void {
+    this.customer.id = null;
     this.customer.firstName = '';
     this.customer.lastName = '';
     this.customer.code = '';
-    this.customer.type = this.customerTypes[0];
+    this.customer.type = '';
     this.customer.phones = [];
     console.log("fields cleared");
   }
 
   addPhone(): void {
-    this.customer.phones.push(new Phone(null,'',''));
+    this.customer.phones.push(new Phone(null, '', ''));
     console.log("phone created");
   }
 
   deletePhone(phone: Phone): void {
-    // https://blog.mariusschulz.com/2016/07/16/removing-elements-from-javascript-arrays
     const index = this.customer.phones.indexOf(phone);
     this.customer.phones.splice(index, 1);
     console.log("phone deleted");

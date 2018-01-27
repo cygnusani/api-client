@@ -1,10 +1,8 @@
-<!-- brackets for a reactive form -->
 <div id="customer-form" class="container" *ngIf="customer!=null">
   <form #customerForm="ngForm">
-
     <div class="row">
-      <h4 *ngIf="customer.id==null">New customer</h4>
-      <h4 *ngIf="customer.id!=null">Edit customer</h4>
+      <h4 [hidden]="customer.id!=null">New customer</h4>
+      <h4 [hidden]="customer.id==null">Edit customer</h4>
     </div>
     <div class="form-group">
       <label for="firstName">First Name</label>
@@ -12,26 +10,29 @@
              required
              minlength="2"
              maxlength="15"
-             pattern="[a-zA-Z ]*"
-             #firstName="ngModel">
+             pattern="[a-zA-Z ]*">
+      <small class="form-text text-muted">Must be 2-15 characters long, may contain letters and spaces.
+      </small>
     </div>
     <div class="form-group">
       <label for="lastName">Last Name</label>
-      <input type="text" class="form-control" id="lastName" name="last" [(ngModel)]="customer.lastName"
+      <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="customer.lastName"
              required
              minlength="2"
              maxlength="15"
              pattern="[a-zA-Z ]*">
+      <small class="form-text text-muted">Must be 2-15 characters long, may contain letters and spaces.</small>
     </div>
     <div class="form-group">
       <label for="code">Code</label>
       <input type="text" class="form-control" id="code" name="code" [(ngModel)]="customer.code"
              required
              pattern="[0-9a-zA-Z ]*">
+      <small class="form-text text-muted">May contain letters, numbers and spaces</small>
     </div>
     <div class="form-group">
       <label for="type">Type</label>
-      <select class="form-control" id="type" name="type" [(ngModel)]="customer.type"
+      <select class="form-control" id="type" name="customerType" [(ngModel)]="customer.type"
               required>
         <option *ngFor="let customerType of customerTypes" [value]="customerType">{{customerType.split('.')[1]}}
         </option>
@@ -39,38 +40,37 @@
     </div>
     <div class="form-group">
       <label for="phones">Phones</label>
-      <div class="row">
+      <div id="phones" class="row">
         <button id="add-phone-btn" type="button" class="btn btn-outline-success" (click)="addPhone()"><i
           class="fa fa-plus"></i></button>
         <h6 id="add-phone-text">Add new phone</h6>
       </div>
-      <table class="table" id="phones">
-        <tr *ngFor="let phone of customer.phones">
-          <div id="phone-row-div" class="form-row">
-
-            <div class="col-md-4">
-              <label for="phone">Number</label>
-              <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="phone.value"
-                     required
-                     pattern="\+?\d+">
-            </div>
-
-            <div class="col-md-4">
-              <label for="phoneType">Type</label>
-              <select class="form-control" id="phoneType" name="phoneType" [(ngModel)]="phone.type"
-                      required>
-                <option *ngFor="let phoneType of phoneTypes" [value]="phoneType">{{phoneType.split('.')[1]}}</option>
-              </select>
-            </div>
-
-            <div id="remove-phone-btn-row" class="col-md-4">
-              <button id="remove-phone-btn" type="button" class="btn btn-outline-danger" (click)="deletePhone(phone)"><i
-                class="fa fa-remove"></i></button>
-            </div>
-
+      <div id="phone-row-div">
+        <div class="form-row" *ngFor="let phone of customer.phones">
+          <div class="col-md-4">
+            <label>Number</label>
+            <input type="text" class="form-control" name="phone-{{phone.id}}" [(ngModel)]="phone.value"
+                   required
+                   minlength="8"
+                   maxlength="15"
+                   pattern="\+?\d+">
+            <small class="form-text text-muted">Must be 8-15 characters long, may contain "+" at the beginning, only
+              numbers are allowed.
+            </small>
           </div>
-        </tr>
-      </table>
+          <div class="col-md-4">
+            <label>Type</label>
+            <select class="form-control" name="phoneType-{{phone.id}}" [(ngModel)]="phone.type"
+                    required>
+              <option *ngFor="let type of phoneTypes" [value]="type">{{type.split('.')[1]}}</option>
+            </select>
+          </div>
+          <div id="remove-phone-btn-row" class="col-md-4">
+            <button id="remove-phone-btn" type="button" class="btn btn-outline-danger" (click)="deletePhone(phone)"><i
+              class="fa fa-remove"></i></button>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="customer-form-btns" class="form-group">
       <div class="button-row">
@@ -80,7 +80,5 @@
         <button type="button" class="btn btn-outline-danger" (click)="clear()">Clear</button>
       </div>
     </div>
-
   </form>
-
 </div>
