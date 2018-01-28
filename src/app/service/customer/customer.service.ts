@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {of} from "rxjs/observable/of";
 import {Observable} from "rxjs/Observable";
 import {catchError, tap} from "rxjs/operators";
@@ -7,19 +7,19 @@ import {MessageService} from "../message/message.service";
 import {Customer} from "../../model/customer";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable()
 export class CustomerService {
 
-  private customersUrl = 'api/customers';  // URL to web api
+  private customersUrl = 'http://localhost:8080/api/customers';  // URL to web api
 
   // This is a typical "service-in-service" scenario: you inject the MessageService
   // into the HeroService which is injected into the HeroesComponent
-  constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+  constructor(private http: HttpClient,
+              private messageService: MessageService) {
+  }
 
   /** GET customer by id. Will 404 if id not found */
   getCustomerById(id: number): Observable<Customer> {
@@ -31,7 +31,7 @@ export class CustomerService {
   }
 
   /** GET customer from the server */
-  getCustomers (): Observable<Customer[]> {
+  getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customersUrl)
       .pipe(
         // The HeroService methods will tap into the flow of observable values and send a message (via log()) to the
@@ -47,28 +47,28 @@ export class CustomerService {
   }
 
   /** POST: add a new customer to the server */
-  addCustomer (hero: Customer): Observable<Customer> {
-    return this.http.post<Customer>(this.customersUrl, hero, httpOptions).pipe(
-      tap((hero: Customer) => this.log(`added customer w/ id=${hero.id}`)),
+  addCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(this.customersUrl, customer, httpOptions).pipe(
+      tap((customer: Customer) => this.log(`added customer`)),
       catchError(this.handleError<Customer>('addCustomer'))
     );
   }
 
   /** PUT: update the customer on the server */
-  updateCustomer (hero: Customer): Observable<any> {
-    return this.http.put(this.customersUrl, hero, httpOptions).pipe(
-      tap(_ => this.log(`updated hero id=${hero.id}`)),
+  updateCustomer(customer: Customer): Observable<any> {
+    return this.http.put(this.customersUrl, customer, httpOptions).pipe(
+      tap(_ => this.log(`updated customer id=${customer.id}`)),
       catchError(this.handleError<any>('updateCustomer'))
     );
   }
 
   /** DELETE: delete the customer from the server */
-  deleteCustomer (hero: Customer | number): Observable<Customer> {
-    const id = typeof hero === 'number' ? hero : hero.id;
+  deleteCustomer(customer: Customer | number): Observable<Customer> {
+    const id = typeof customer === 'number' ? customer : customer.id;
     const url = `${this.customersUrl}/${id}`;
 
     return this.http.delete<Customer>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
+      tap(_ => this.log(`deleted customer id=${id}`)),
       catchError(this.handleError<Customer>('deleteCustomer'))
     );
   }
@@ -98,7 +98,7 @@ export class CustomerService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

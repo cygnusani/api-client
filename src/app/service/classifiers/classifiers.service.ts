@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
 import {of} from "rxjs/observable/of";
@@ -8,17 +8,17 @@ import {MessageService} from "../message/message.service";
 @Injectable()
 export class ClassifiersService {
 
-  private customerTypesUrl = 'api/customerTypes';  // URL to web api
-  private phoneTypesUrl = 'api/phoneTypes';  // URL to web api
+  private customerTypesUrl = 'http://localhost:8080/api/classifiers/customer_types';  // URL to web api
+  private phoneTypesUrl = 'http://localhost:8080/api/classifiers/phone_types';  // URL to web api
 
   // This is a typical "service-in-service" scenario: you inject the MessageService
   // into the HeroService which is injected into the HeroesComponent
-  constructor(
-    private http: HttpClient,
-    private messageService: MessageService) { }
+  constructor(private http: HttpClient,
+              private messageService: MessageService) {
+  }
 
   /** GET phone types from the server */
-  getPhoneTypes (): Observable<string[]> {
+  getPhoneTypes(): Observable<string[]> {
     return this.http.get<string[]>(this.phoneTypesUrl)
       .pipe(
         tap(types => this.log(`fetched phone types`)),
@@ -27,7 +27,7 @@ export class ClassifiersService {
   }
 
   /** GET customer types from the server */
-  getCustomerTypes (): Observable<string[]> {
+  getCustomerTypes(): Observable<string[]> {
     return this.http.get<string[]>(this.customerTypesUrl)
       .pipe(
         tap(types => this.log(`fetched customer types`)),
@@ -48,7 +48,7 @@ export class ClassifiersService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

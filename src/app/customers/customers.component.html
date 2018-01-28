@@ -18,9 +18,14 @@
       <td class="col-sm-2">{{customer.code}}</td>
       <td class="col-sm-3">
         <div class="btn-group">
-          <button id="info-btn" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#moreInfoModal" (click)="getMoreInfo(customer)"><i class="fa fa-info-circle"></i></button>
-          <button id="edit-btn" type="button" class="btn btn-outline-primary" routerLink="/edit/{{customer.id}}"><i class="fa fa-edit"></i></button>
-          <button id="delete-btn" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="selectCustomerToDeletion(customer)"><i class="fa fa-trash"></i></button>
+          <button id="info-btn" type="button" class="btn btn-outline-secondary" data-toggle="modal"
+                  data-target="#moreInfoModal" (click)="getMoreInfo(customer)"><i class="fa fa-info-circle"></i>
+          </button>
+          <button id="edit-btn" type="button" class="btn btn-outline-primary" routerLink="/edit/{{customer.id}}"><i
+            class="fa fa-edit"></i></button>
+          <button id="delete-btn" type="button" class="btn btn-outline-danger" data-toggle="modal"
+                  data-target="#deleteConfirmationModal" (click)="selectCustomerToDeletion(customer)"><i
+            class="fa fa-trash"></i></button>
         </div>
       </td>
     </tr>
@@ -52,7 +57,7 @@
             </tbody>
           </table>
         </div>
-        <div class="container">
+        <div class="container" *ngIf="customer.phones.length>0">
           <h5 id="info-phones-label">Phones</h5>
           <table class="table">
             <thead class="thead-light">
