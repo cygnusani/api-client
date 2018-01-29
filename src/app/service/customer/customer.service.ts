@@ -13,10 +13,8 @@ const httpOptions = {
 @Injectable()
 export class CustomerService {
 
-  private customersUrl = 'http://localhost:8080/api/customers';  // URL to web api
+  private customersUrl = 'http://localhost:8080/api/customers';
 
-  // This is a typical "service-in-service" scenario: you inject the MessageService
-  // into the HeroService which is injected into the HeroesComponent
   constructor(private http: HttpClient,
               private messageService: MessageService) {
   }
@@ -25,7 +23,7 @@ export class CustomerService {
   getCustomerById(id: number): Observable<Customer> {
     const url = `${this.customersUrl}/${id}`;
     return this.http.get<Customer>(url).pipe(
-      tap(_ => this.log(`fetched customer id=${id}`)),
+      tap(() => this.log(`fetched customer id=${id}`)),
       catchError(this.handleError<Customer>(`getCustomerById id=${id}`))
     );
   }
@@ -34,31 +32,16 @@ export class CustomerService {
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.customersUrl)
       .pipe(
-        // The HeroService methods will tap into the flow of observable values and send a message (via log()) to the
-        // message area at the bottom of the page. They'll do that with the RxJS tap operator, which looks at the
-        // observable values, does something with those values, and passes them along. The tap call back doesn't touch
-        // the values themselves.
-        tap(heroes => this.log(`fetched customers`)),
-        // The catchError() operator intercepts an Observable that failed.
-        // It passes the error an error handler that can do what it wants with the error.
-        // The following handleError() method reports the error and then returns an innocuous result so that the application keeps working
+        tap(() => this.log(`fetched customers`)),
         catchError(this.handleError('getCustomers', []))
       );
   }
 
-  /** POST: add a new customer to the server */
-  addCustomer(customer: Customer): Observable<Customer> {
+  /** POST: add or update the customer */
+  postCustomer(customer: Customer): Observable<Customer> {
     return this.http.post<Customer>(this.customersUrl, customer, httpOptions).pipe(
-      tap((customer: Customer) => this.log(`added customer`)),
-      catchError(this.handleError<Customer>('addCustomer'))
-    );
-  }
-
-  /** PUT: update the customer on the server */
-  updateCustomer(customer: Customer): Observable<any> {
-    return this.http.put(this.customersUrl, customer, httpOptions).pipe(
-      tap(_ => this.log(`updated customer id=${customer.id}`)),
-      catchError(this.handleError<any>('updateCustomer'))
+      tap(() => this.log(`post customer`)),
+      catchError(this.handleError<Customer>('postCustomer'))
     );
   }
 
@@ -68,7 +51,7 @@ export class CustomerService {
     const url = `${this.customersUrl}/${id}`;
 
     return this.http.delete<Customer>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted customer id=${id}`)),
+      tap(() => this.log(`deleted customer id=${id}`)),
       catchError(this.handleError<Customer>('deleteCustomer'))
     );
   }
@@ -79,8 +62,9 @@ export class CustomerService {
       // if not search term, return empty hero array.
       return of([]);
     }
-    return this.http.get<Customer[]>(`api/customers/?firstName=${term}`).pipe(
-      tap(_ => this.log(`found customers matching "${term}"`)),
+    const url = `${this.customersUrl}/search`;
+    return this.http.get<Customer[]>(url, {params: {'key': term}}).pipe(
+      tap(() => this.log(`found customers matching "${term}"`)),
       catchError(this.handleError<Customer[]>('searchForCustomers', []))
     );
   }
@@ -90,8 +74,6 @@ export class CustomerService {
     this.messageService.add('CustomerService: ' + message);
   }
 
-  // Because each service method returns a different kind of Observable result, errorHandler() takes a type parameter
-  // so it can return the safe value as the type that the app expects.
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -101,10 +83,10 @@ export class CustomerService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
+      // TOD0: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
+      // TOD0: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.

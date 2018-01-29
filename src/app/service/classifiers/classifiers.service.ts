@@ -8,11 +8,9 @@ import {MessageService} from "../message/message.service";
 @Injectable()
 export class ClassifiersService {
 
-  private customerTypesUrl = 'http://localhost:8080/api/classifiers/customer_types';  // URL to web api
-  private phoneTypesUrl = 'http://localhost:8080/api/classifiers/phone_types';  // URL to web api
+  private customerTypesUrl = 'http://localhost:8080/api/classifiers/customer_types';
+  private phoneTypesUrl = 'http://localhost:8080/api/classifiers/phone_types';
 
-  // This is a typical "service-in-service" scenario: you inject the MessageService
-  // into the HeroService which is injected into the HeroesComponent
   constructor(private http: HttpClient,
               private messageService: MessageService) {
   }
@@ -21,7 +19,7 @@ export class ClassifiersService {
   getPhoneTypes(): Observable<string[]> {
     return this.http.get<string[]>(this.phoneTypesUrl)
       .pipe(
-        tap(types => this.log(`fetched phone types`)),
+        tap(() => this.log(`fetched phone types`)),
         catchError(this.handleError('getPhoneTypes', []))
       );
   }
@@ -30,7 +28,7 @@ export class ClassifiersService {
   getCustomerTypes(): Observable<string[]> {
     return this.http.get<string[]>(this.customerTypesUrl)
       .pipe(
-        tap(types => this.log(`fetched customer types`)),
+        tap(() => this.log(`fetched customer types`)),
         catchError(this.handleError('getCustomerTypes', []))
       );
   }
@@ -51,10 +49,10 @@ export class ClassifiersService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
+      // TOD0: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
+      // TOD0: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.

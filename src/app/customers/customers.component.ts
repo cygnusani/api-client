@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Customer} from "../model/customer";
 import {CustomerService} from "../service/customer/customer.service";
 import {Phone} from "../model/phone";
@@ -17,7 +17,8 @@ export class CustomersComponent implements OnInit {
 
   // When Angular creates a HeroesComponent, the Dependency Injection system sets
   // the heroService parameter to the singleton instance of HeroService
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService) {
+  }
 
   // a lifecycle hook, called shortly after creating a component
   // a good place to put initialization logic

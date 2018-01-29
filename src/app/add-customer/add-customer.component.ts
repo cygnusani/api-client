@@ -55,13 +55,8 @@ export class AddCustomerComponent implements OnInit {
   }
 
   save(): void {
-    if (this.customer.id == null) {
-      this.customerService.addCustomer(this.customer)
-        .subscribe(() => this.goBack());
-    } else {
-      this.customerService.updateCustomer(this.customer)
-        .subscribe(() => this.goBack());
-    }
+    this.customerService.postCustomer(this.customer)
+      .subscribe(() => this.goBack());
     console.log("customer saved");
   }
 
